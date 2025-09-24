@@ -14,6 +14,7 @@ public class Driver {
 	static Scanner sc = new Scanner(System.in);
 	static UserService service = new UserServiceImpl();
 	static BookService bookService = new BookServiceImpl();
+	static Librarian librarian = new Librarian();
 
 	public static void main(String[] args) {
 		do {
@@ -46,7 +47,7 @@ public class Driver {
 				break;
 			}
 			case 3: {
-				System.out.println("librarian Login wait ...");
+                   librarian.librarianLogin();
 			}
 
 			}
@@ -101,17 +102,16 @@ public class Driver {
 				String name = sc.nextLine();
 				Book bookToReturn = user.getBooks().stream().filter(e -> e.getName().equalsIgnoreCase(name)).findFirst()
 						.orElse(null);
-				if(bookToReturn==null) {
+				if (bookToReturn == null) {
 					System.out.println("You dont have that book");
 					break;
-				}
-				else {
+				} else {
 					user.getBooks().remove(bookToReturn);
-				    Book update	=bookService.searchByName(bookToReturn.getName());
-				    bookService.removeBookByName(name);
-				    update.setCopy(update.getCopy()+1);
-				    bookService.addBook(update);
-				    System.out.println("Book returned ");
+					Book update = bookService.searchByName(bookToReturn.getName());
+					bookService.removeBookByName(name);
+					update.setCopy(update.getCopy() + 1);
+					bookService.addBook(update);
+					System.out.println("Book returned ");
 				}
 				break;
 			}
